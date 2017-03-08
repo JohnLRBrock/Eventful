@@ -1,0 +1,21 @@
+<% if @events.any? %>
+  <h2>
+  <%= @user.name %>'s Events
+  </h2>
+  <ol>  
+  <% @events.each do |event| %>
+    <li>
+    <%= render 'users_events', event: event %>
+    </li>
+  <% end %>
+  </ol>
+<% else %>
+    <p>No Events</p>
+<% end %>
+<% if @user.event_invitations.any? %>
+  <% @user.event_invitations.each do |invite| %>
+    <%= invite.inspect %>
+  <% end %>
+<% else %>
+  <h3><%= @user.name %> is attending no events</h3>
+<% end %>

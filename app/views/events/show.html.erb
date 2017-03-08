@@ -1,0 +1,12 @@
+<% if @event %>
+  <%= render 'event', event: @event, attendees: @attendees %>
+  <ol>
+  <% @attendees.each do |attendee| %>
+    <li>
+    <%= render 'attendee', attendee: attendee %>
+    </li>
+  <% end %>
+  </ol>
+<% else %>
+  <h2>This event doesn't exist</h2>
+<% end %>

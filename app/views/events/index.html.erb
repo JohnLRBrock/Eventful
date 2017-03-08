@@ -1,0 +1,11 @@
+<% if @events.any? %>
+  <ol>
+
+  <% @events.each do |event| %>
+    <li><%= link_to event.name, event_path(event.id) %></li>
+  <% end %>
+
+  </ol>
+<% else %>
+  <h1>No Events</h1>
+<% end %>

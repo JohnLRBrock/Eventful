@@ -1,0 +1,9 @@
+<%= link_to 'home', root_path %>
+<%= link_to 'login', login_path unless logged_in? %>
+<% if logged_in? %>
+  <%= link_to 'new event', controller: :events, action: :new %>
+  <%= link_to 'logout',    logout_path %>
+  Current user:
+  <%= link_to "#{User.find(cookies.permanent[:id]).name}", user_path(cookies.permanent[:id]) %>
+<% end %>
+  <br>
