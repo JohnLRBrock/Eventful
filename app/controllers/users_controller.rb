@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def new
     @user = User.new
   end
@@ -10,10 +11,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    redirect_to login_url unless User.exists?(id)
-    @user = User.find(id)
-    @events = Event.where(creator_id: id)
+    user_id = params[:id]
+    redirect_to login_url and return unless User.exists?(user_id)
+    @user = User.find(user_id)
+    @events = Event.where(creator_id: user_id)
+    @invitations = @user.invitations
+    @future_events_attending = @user.attendings.future_events
+    @past_events_attended    = @user.attendings.past_events
   end
 
   def logout

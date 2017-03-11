@@ -16,16 +16,47 @@ class EventsController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    redirect_to root_url unless Event.exists?(id)
-    @event = Event.find(id)
+    event_id = params[:id]
+    redirect_to root_url and return unless Event.exists?(event_id)
+    @event = Event.find(event_id)
     @attendees = @event.attendees
+    user_id = events_current_user.id
+    if events_logged_in?
+      @logged_in = true
+      @user = events_current_user
+      @is_attending = @user.attendings.exists?(event_id)
+    end
+    @users = User.where("id <> ?", user_id) if @logged_in
   end
       
   def index
-    @events = Event.all
+    @past_events   = Event.past_events
+    @future_events = Event.future_events
   end
 
+  def invite
+    user_id  = params[:user_id]
+    event_id = params[:event_id]
+    if User.exists?(user_id) && Event.exists?(event_id)
+      event = Event.find(event_id)
+      user  = User.find(user_id)
+      event.invitees << user
+      redirect_to event_path(params[:event_id])
+    else
+      redirect_to root_url
+    end
+  end
+
+  def attend
+    user_id  = params[:user_id]
+    event_id = params[:event_id]
+    if User.exists?(user_id) && Event.exists?(event_id)
+      user  = User.find(user_id)
+      event = Event.find(event_id)
+      user.attendings << event unless user.attendings.exists?(event_id)
+    end
+    redirect_to event_url(params[:event_id])
+  end
 
   def events_current_user
     id = cookies.permanent[:id]

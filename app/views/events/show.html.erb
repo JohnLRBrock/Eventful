@@ -1,12 +1,23 @@
-<% if @event %>
-  <%= render 'event', event: @event, attendees: @attendees %>
-  <ol>
-  <% @attendees.each do |attendee| %>
-    <li>
-    <%= render 'attendee', attendee: attendee %>
-    </li>
+<%= render 'event', event: @event, attendees: @attendees %>
+
+<ul>
+<% @attendees.each do |attendee| %>
+  <%= render 'attendee', attendee: attendee %>
+<% end %>
+</ul>
+
+<% if @logged_in %>
+  <% if @is_attending %>
+    <p>You are attending</p>
+  <% else %>
+    <%= link_to "ATTEND", attend_path(@event.id, @user.id) %>
   <% end %>
-  </ol>
-<% else %>
-  <h2>This event doesn't exist</h2>
+  <% if @users.any? %>
+    <h2>Invite Users:</h2>
+    <% @users.each do |user| %>
+      <%= link_to user.name, invite_path(@event.id, user.id) %>
+    <% end %>
+  <% else %>
+    <p>No users to invite</p>
+  <% end %>
 <% end %>

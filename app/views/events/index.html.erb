@@ -1,11 +1,31 @@
-<% if @events.any? %>
-  <ol>
+<% if @past_events.any? || @future_events.any? %>
+  <h2>Future Events:</h2>
 
-  <% @events.each do |event| %>
-    <li><%= link_to event.name, event_path(event.id) %></li>
+  <% if @future_events.any? %>
+
+    <ol>
+      <% @future_events.each do |event| %>
+        <li><%= link_to event.name, event_path(event.id) %></li>
+      <% end %>
+    </ol>
+
+  <% else %>
+    <h3>No future Events</h3>
   <% end %>
 
-  </ol>
+  <h2>Past Events:</h2>
+
+  <% if @past_events.any? %>
+
+    <ol>
+      <% @past_events.each do |event| %>
+        <li><%= link_to event.name, event_path(event.id) %></li>
+      <% end %>
+    </ol>
+
+  <% else %>
+    <h3>No Past Events</h3>
+  <% end %>
 <% else %>
-  <h1>No Events</h1>
+  <h1>No events</h1>
 <% end %>

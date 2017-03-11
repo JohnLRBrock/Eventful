@@ -1,16 +1,6 @@
-<% puts "in _event.html.erb #{event.inspect}" %>
 <h1><%= event.name %></h1>
 <p><%= event.description %></p>
-<h2>Created by:<%= event.creator.name %></h2>
-<h3>Location:<%= event.location %></h3>
-<h3>Time:<%= event.datetime %></h3>
-<% if @attendees.any? %>
-  <h2>Attending:</h2>
-  <ul>
-  <% @attendees.each do |attendee| %>
-    <li><% attendee.name %></li>
-  <% end %>
-  </ul>
-  <% else %>
-    <h3>No one is attending this event</h3>
-<% end %>
+<h3>Created by: <%= link_to event.creator.name, 
+                            user_path(event.creator.id) %></h3>
+<h3>Location: <%= event.location %></h3>
+<h3>Time: <%= event.datetime %></h3>

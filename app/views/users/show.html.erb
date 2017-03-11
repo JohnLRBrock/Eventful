@@ -1,21 +1,34 @@
+<h2><%= @user.name %>'s events</h2>
+
 <% if @events.any? %>
-  <h2>
-  <%= @user.name %>'s Events
-  </h2>
-  <ol>  
-  <% @events.each do |event| %>
-    <li>
-    <%= render 'users_events', event: event %>
-    </li>
-  <% end %>
+
+  <ol>
+    <% @events.each do |event| %>
+      <li><%= render 'users_events', event: event %></li>
+    <% end %>
   </ol>
+
 <% else %>
-    <p>No Events</p>
+    <p><%= @user.name %> has no events</p>
 <% end %>
-<% if @user.event_invitations.any? %>
-  <% @user.event_invitations.each do |invite| %>
-    <%= invite.inspect %>
+
+<% if @invitations.any? %>
+  <h2>Events <%= @user.name %> is invited to:</h2>
+  <ul>
+    <% @invitations.each do |invitation| %>
+      <% id = invitation.id %>
+      <% if Event.exists?(id) %>
+        <li><%= link_to Event.find(id).name, event_path(id) %></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+<% if @future_events_attending.any? || @past_events_attended.any? %>
+  <h2>Events <%= @user.name %> is attending</h2>
+  <% if @future_events_attending.any? %>
+    <h3>Future events:</h3>
   <% end %>
-<% else %>
-  <h3><%= @user.name %> is attending no events</h3>
+  <% if @past_events_attended.any? %>
+    <h3>Past events:</h3>
+  <% end %>
 <% end %>
