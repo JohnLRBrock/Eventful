@@ -27,8 +27,18 @@
   <h2>Events <%= @user.name %> is attending</h2>
   <% if @future_events_attending.any? %>
     <h3>Future events:</h3>
+    <ul>
+    <% @future_events_attending.each do |event| %>
+      <li><%= render 'users_events', event: event %></li>
+    <% end %>
+    </ul>
   <% end %>
   <% if @past_events_attended.any? %>
     <h3>Past events:</h3>
+    <ul>
+    <% @past_events_attended.each do |event| %>
+      <li><%= render 'users_events', event: event %></li>
+    <% end %>
+    </ul>
   <% end %>
 <% end %>

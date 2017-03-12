@@ -20,8 +20,8 @@ class EventsController < ApplicationController
     redirect_to root_url and return unless Event.exists?(event_id)
     @event = Event.find(event_id)
     @attendees = @event.attendees
-    user_id = events_current_user.id
     if events_logged_in?
+      user_id = events_current_user.id
       @logged_in = true
       @user = events_current_user
       @is_attending = @user.attendings.exists?(event_id)
