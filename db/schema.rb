@@ -22,12 +22,11 @@ ActiveRecord::Schema.define(version: 20170310233413) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "location"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "creator_id"
     t.text     "description"
     t.datetime "datetime"
-    t.index ["creator_id"], name: "index_events_on_creator_id"
+    t.integer  "creator_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "invitations", id: false, force: :cascade do |t|
